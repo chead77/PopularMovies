@@ -23,18 +23,24 @@ public class PostersViewModel extends ViewModel {
         void onNetworkError();
     }
     private PostersViewModelCallback callback;
+    @SuppressWarnings("unused")
     public void setPostersViewModelCallback(PostersViewModelCallback newCallback) {
         callback = newCallback;
     }
 
-    public void init() {
-        getMovieList();
+    public void init(String sortBy, PostersViewModelCallback callback) {
+        this.callback = callback;
+        getMovieList(sortBy);
     }
 
-    private void getMovieList() {
+    public void refreshMovieList(String sortBy) {
+        getMovieList(sortBy);
+    }
+
+    private void getMovieList(String sortBy) {
         // Constants.API_KEY is a String constant stored in a file that will not be included in the Github repo.
         // To use this project, a new API key will need to be obtained from https://www.themoviedb.org/account/signup
-        ServiceLocator.getInstance().getTMDBService().getPopularMovies(Constants.API_KEY).enqueue(new Callback<MovieResults>() {
+        ServiceLocator.getInstance().getTMDBService().getMovies(sortBy, Constants.API_KEY).enqueue(new Callback<MovieResults>() {
             @Override
             public void onResponse(Call<MovieResults> call, Response<MovieResults> response) {
                 if (response.code() == 200) {

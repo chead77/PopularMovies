@@ -2,6 +2,7 @@ package com.cheadtech.popularmovies.models;
 
 import java.util.ArrayList;
 
+@SuppressWarnings({"WeakerAccess", "unused"})
 public class MovieResults {
     public MovieResults(int totalResults, int totalPages, ArrayList<Movie> movies) {
         page = 1;

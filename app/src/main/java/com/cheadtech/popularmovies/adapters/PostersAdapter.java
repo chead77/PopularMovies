@@ -2,7 +2,6 @@ package com.cheadtech.popularmovies.adapters;
 
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,7 +18,7 @@ public class PostersAdapter extends RecyclerView.Adapter<PosterViewHolder> {
     private String posterPathPrefix;
 
     public PostersAdapter(ArrayList<Movie> data, int screenWidth, PostersAdapterCallback callback) {
-        posterPathPrefix =  lookupPosterWidth(screenWidth / 2) + "/";
+        posterPathPrefix = buildPosterPathPrefix(screenWidth / 2) + "/";
         dataSet = data;
         this.callback = callback;
     }
@@ -51,7 +50,6 @@ public class PostersAdapter extends RecyclerView.Adapter<PosterViewHolder> {
             poster.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    Log.e("PostersActivity:onBindViewHolder.onClick", " - item at position " + holder.getAdapterPosition() + " clicked");
                     callback.onPosterClicked(dataSet.get(holder.getAdapterPosition()));
                 }
             });
@@ -61,7 +59,7 @@ public class PostersAdapter extends RecyclerView.Adapter<PosterViewHolder> {
     @Override
     public int getItemCount() { return dataSet.size(); }
 
-    private String lookupPosterWidth(Integer columnWidth) {
+    private String buildPosterPathPrefix(Integer columnWidth) {
         String resStr = "http://image.tmdb.org/t/p/w";
         if (columnWidth < ((92+154) / 2))
             resStr = resStr.concat("92");

@@ -1,4 +1,14 @@
 <resources>
     <string name="app_name">Popular Movies</string>
     <string name="movie_poster_content_description">Movie Poster</string>
+    <string name="extra_movie" translatable="false">extra_movie</string>
+
+    <!-- Posters settings -->
+    <string name="action_settings">Settings</string>
+    <string name="pref_sort_by_label">Sort by…</string>
+    <string name="pref_sort_by_key" translatable="false">sort_by_key</string>
+    <string name="pref_sort_by_label_popular">Popular</string>
+    <string name="pref_sort_by_label_top_rated">Top Rated</string>
+    <string name="pref_sort_by_popular_value" translatable="false">popular</string>
+    <string name="pref_sort_by_top_rated_value" translatable="false">top_rated</string>
 </resources>

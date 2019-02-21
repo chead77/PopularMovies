@@ -1,8 +1,10 @@
 package com.cheadtech.popularmovies.models;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
-public class Movie {
+@SuppressWarnings({"WeakerAccess", "unused"})
+public class Movie implements Serializable {
     public Movie(
             Integer voteCount,
             Integer id,
