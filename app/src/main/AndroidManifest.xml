@@ -12,12 +12,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".PostersSettingsActivity"
-            android:label="@string/action_settings"
-            android:parentActivityName=".PostersActivity"
-            />
-        <activity android:name=".DetailActivity" />
-        <activity android:name=".PostersActivity"
+        <activity android:name=".activities.PostersActivity"
             android:launchMode="singleTop"
             >
             <intent-filter>
@@ -26,6 +21,14 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".activities.PostersSettingsActivity"
+            android:label="@string/action_settings"
+            android:parentActivityName=".activities.PostersActivity"
+            />
+        <activity android:name=".activities.DetailActivity"
+            android:label="@string/movie_detail_label"
+            android:parentActivityName=".activities.PostersActivity"
+            />
     </application>
 
 </manifest>

@@ -1,4 +1,4 @@
-package com.cheadtech.popularmovies;
+package com.cheadtech.popularmovies.fragments;
 
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
@@ -9,6 +9,8 @@ import android.support.v7.preference.Preference;
 import android.support.v7.preference.PreferenceFragmentCompat;
 import android.support.v7.preference.PreferenceManager;
 import android.support.v7.preference.PreferenceScreen;
+
+import com.cheadtech.popularmovies.R;
 
 public class PostersSettingsFragment extends PreferenceFragmentCompat implements SharedPreferences.OnSharedPreferenceChangeListener {
     @Override
@@ -44,7 +46,6 @@ public class PostersSettingsFragment extends PreferenceFragmentCompat implements
     public void onConfigurationChanged(Configuration newConfig) {
         super.onConfigurationChanged(newConfig);
     }
-
 
     @Override
     public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {

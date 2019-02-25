@@ -1,4 +1,4 @@
-package com.cheadtech.popularmovies;
+package com.cheadtech.popularmovies.activities;
 
 import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
@@ -15,6 +15,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
 
+import com.cheadtech.popularmovies.R;
 import com.cheadtech.popularmovies.adapters.PostersAdapter;
 import com.cheadtech.popularmovies.models.Movie;
 import com.cheadtech.popularmovies.viewmodels.PostersViewModel;
@@ -33,9 +34,7 @@ public class PostersActivity extends AppCompatActivity implements PostersAdapter
         postersRV = findViewById(R.id.posters);
         if (postersRV != null) {
             postersRV.setLayoutManager(new GridLayoutManager(this, 2));
-            Point size = new Point();
-            getWindowManager().getDefaultDisplay().getSize(size);
-            postersRV.setAdapter(new PostersAdapter(new ArrayList<Movie>(), size.x, this));
+            postersRV.setAdapter(new PostersAdapter(new ArrayList<Movie>(), buildPosterPathBase(), this));
         }
 
         viewModel = ViewModelProviders.of(this).get(PostersViewModel.class);
@@ -47,6 +46,26 @@ public class PostersActivity extends AppCompatActivity implements PostersAdapter
         });
 
         setupSharedPreferences();
+    }
+
+    private String buildPosterPathBase() {
+        Point size = new Point();
+        getWindowManager().getDefaultDisplay().getSize(size);
+        String resStr = "http://image.tmdb.org/t/p/w";
+        if (size.x / 2 < ((92+154) / 2))
+            resStr = resStr.concat("92");
+        if (size.x / 2 < ((154 + 185) / 2))
+            resStr = resStr.concat("154");
+        if (size.x / 2 < ((185 + 342) / 2))
+            resStr = resStr.concat("185");
+        if (size.x / 2 < ((342 + 500) / 2))
+            resStr = resStr.concat("342");
+        if (size.x / 2 < ((500 + 780) / 2))
+            resStr = resStr.concat("500");
+        else
+            resStr = resStr.concat("780");
+        resStr = resStr.concat("/");
+        return resStr;
     }
 
     private void setupSharedPreferences() {
@@ -85,6 +104,7 @@ public class PostersActivity extends AppCompatActivity implements PostersAdapter
         Toast.makeText(this, movie.title + " Clicked", Toast.LENGTH_LONG).show();
         Intent intent = new Intent(this, DetailActivity.class);
         intent.putExtra(getString(R.string.extra_movie), movie);
+        intent.putExtra(getString(R.string.extra_poster_base), buildPosterPathBase());
         startActivity(intent);
     }
 

@@ -15,10 +15,10 @@ import com.squareup.picasso.Picasso;
 import java.util.ArrayList;
 
 public class PostersAdapter extends RecyclerView.Adapter<PosterViewHolder> {
-    private String posterPathPrefix;
+    private String posterPathBase;
 
-    public PostersAdapter(ArrayList<Movie> data, int screenWidth, PostersAdapterCallback callback) {
-        posterPathPrefix = buildPosterPathPrefix(screenWidth / 2) + "/";
+    public PostersAdapter(ArrayList<Movie> data, String base, PostersAdapterCallback callback) {
+        posterPathBase = base;
         dataSet = data;
         this.callback = callback;
     }
@@ -44,7 +44,7 @@ public class PostersAdapter extends RecyclerView.Adapter<PosterViewHolder> {
     public void onBindViewHolder(@NonNull final PosterViewHolder holder, int position) {
         ImageView poster = holder.poster;
         if (poster != null) {
-            Picasso.get().load(posterPathPrefix + dataSet.get(position).poster_path).into(poster);
+            Picasso.get().load(posterPathBase + dataSet.get(position).poster_path).into(poster);
             poster.setContentDescription(poster.getContext()
                     .getString(R.string.movie_poster_content_description) + " - " + dataSet.get(position).title);
             poster.setOnClickListener(new View.OnClickListener() {
@@ -58,21 +58,4 @@ public class PostersAdapter extends RecyclerView.Adapter<PosterViewHolder> {
 
     @Override
     public int getItemCount() { return dataSet.size(); }
-
-    private String buildPosterPathPrefix(Integer columnWidth) {
-        String resStr = "http://image.tmdb.org/t/p/w";
-        if (columnWidth < ((92+154) / 2))
-            resStr = resStr.concat("92");
-        if (columnWidth < ((154 + 185) / 2))
-            resStr = resStr.concat("154");
-        if (columnWidth < ((185 + 342) / 2))
-            resStr = resStr.concat("185");
-        if (columnWidth < ((342 + 500) / 2))
-            resStr = resStr.concat("342");
-        if (columnWidth < ((500 + 780) / 2))
-            resStr = resStr.concat("500");
-        else
-            resStr = resStr.concat("780");
-        return resStr;
-    }
 }
