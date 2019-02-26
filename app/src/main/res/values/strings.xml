@@ -2,6 +2,7 @@
     <string name="app_name">Popular Movies</string>
     <string name="movie_poster_content_description">Movie Poster</string>
     <string name="extra_movie" translatable="false">extra_movie</string>
+    <string name="alert_network_error">Network Error. Please try again.</string>
 
     <!-- Posters settings -->
     <string name="action_settings">Settings</string>

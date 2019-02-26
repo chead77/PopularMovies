@@ -103,8 +103,9 @@ public class PostersActivity extends AppCompatActivity
     // PostersViewModel.PostersViewModelCallback method
     @Override
     public void onNetworkError() {
-        // TODO - text?... what to do here???
-        Toast.makeText(this, "", Toast.LENGTH_LONG).show();
+        // might not finish() here in a production app, but this exits cleanly if the list of movies can't be refreshed
+        Toast.makeText(this, getString(R.string.alert_network_error), Toast.LENGTH_LONG).show();
+        finish();
     }
 
     // PostersAdapter.PostersAdapterCallback method
