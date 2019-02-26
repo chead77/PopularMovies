@@ -19,6 +19,7 @@ import android.widget.Toast;
 import com.cheadtech.popularmovies.R;
 import com.cheadtech.popularmovies.adapters.PostersAdapter;
 import com.cheadtech.popularmovies.models.Movie;
+import com.cheadtech.popularmovies.network.NetworkUtils;
 import com.cheadtech.popularmovies.viewmodels.PostersViewModel;
 
 import java.util.ArrayList;
@@ -43,7 +44,7 @@ public class PostersActivity extends AppCompatActivity
             DisplayMetrics metrics = new DisplayMetrics();
             getWindowManager().getDefaultDisplay().getMetrics(metrics);
             postersRV.setAdapter(new PostersAdapter(new ArrayList<Movie>(),
-                    viewModel.buildPosterUrlBase(metrics.widthPixels / numCols), this));
+                    NetworkUtils.buildPosterUrlBase(metrics.widthPixels / numCols), this));
         }
 
         viewModel.moviesLiveData.observe(this, new Observer<ArrayList<Movie>>() {
@@ -120,7 +121,7 @@ public class PostersActivity extends AppCompatActivity
         DisplayMetrics metrics = new DisplayMetrics();
         getWindowManager().getDefaultDisplay().getMetrics(metrics);
         intent.putExtra(getString(R.string.extra_poster_url),
-                viewModel.buildPosterUrlBase(metrics.widthPixels / 2) + movie.poster_path);
+                NetworkUtils.buildPosterUrlBase(metrics.widthPixels / 2) + movie.poster_path);
         startActivity(intent);
     }
 }
