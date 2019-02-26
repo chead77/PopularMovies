@@ -2,7 +2,6 @@ package com.cheadtech.popularmovies.viewmodels;
 
 import android.arch.lifecycle.MutableLiveData;
 import android.arch.lifecycle.ViewModel;
-import android.graphics.Point;
 import android.util.Log;
 
 import com.cheadtech.popularmovies.models.Movie;

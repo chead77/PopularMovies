@@ -22,7 +22,8 @@ dependencies {
     def lifecycle_version = "1.1.1"
 
     implementation fileTree(dir: 'libs', include: ['*.jar'])
-    //noinspection GradleCompatible ... suppressing a version warning produced when picasso is implemented
+    // suppress the version warning produced when picasso is implemented
+    //noinspection GradleCompatible
     implementation 'com.android.support:appcompat-v7:28.0.0'
     implementation 'com.android.support.constraint:constraint-layout:1.1.3'
     implementation 'com.android.support:preference-v7:28.0.0'

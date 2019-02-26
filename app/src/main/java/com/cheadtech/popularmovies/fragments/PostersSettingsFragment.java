@@ -1,7 +1,6 @@
 package com.cheadtech.popularmovies.fragments;
 
 import android.content.SharedPreferences;
-import android.content.res.Configuration;
 import android.os.Bundle;
 import android.support.v7.preference.CheckBoxPreference;
 import android.support.v7.preference.ListPreference;
@@ -40,11 +39,6 @@ public class PostersSettingsFragment extends PreferenceFragmentCompat implements
     public void onDestroy() {
         super.onDestroy();
         PreferenceManager.getDefaultSharedPreferences(requireContext()).unregisterOnSharedPreferenceChangeListener(this);
-    }
-
-    @Override
-    public void onConfigurationChanged(Configuration newConfig) {
-        super.onConfigurationChanged(newConfig);
     }
 
     @Override
