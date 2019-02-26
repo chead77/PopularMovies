@@ -11,6 +11,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.preference.PreferenceManager;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.DisplayMetrics;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
@@ -27,6 +28,8 @@ public class PostersActivity extends AppCompatActivity
     private RecyclerView postersRV;
     private PostersViewModel viewModel;
 
+    private static final Integer numCols = 2;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -36,10 +39,11 @@ public class PostersActivity extends AppCompatActivity
 
         postersRV = findViewById(R.id.posters);
         if (postersRV != null) {
-            postersRV.setLayoutManager(new GridLayoutManager(this, 2));
-            Point size = new Point();
-            getWindowManager().getDefaultDisplay().getSize(size);
-            postersRV.setAdapter(new PostersAdapter(new ArrayList<Movie>(), viewModel.buildPosterUrlBase(size.x / 2), this));
+            postersRV.setLayoutManager(new GridLayoutManager(this, numCols));
+            DisplayMetrics metrics = new DisplayMetrics();
+            getWindowManager().getDefaultDisplay().getMetrics(metrics);
+            postersRV.setAdapter(new PostersAdapter(new ArrayList<Movie>(),
+                    viewModel.buildPosterUrlBase(metrics.widthPixels / numCols), this));
         }
 
         viewModel.moviesLiveData.observe(this, new Observer<ArrayList<Movie>>() {
@@ -113,9 +117,10 @@ public class PostersActivity extends AppCompatActivity
     public void onPosterClicked(Movie movie) {
         Intent intent = new Intent(this, DetailActivity.class);
         intent.putExtra(getString(R.string.extra_movie), movie);
-        Point size = new Point();
-        getWindowManager().getDefaultDisplay().getSize(size);
-        intent.putExtra(getString(R.string.extra_poster_url), viewModel.buildPosterUrlBase(size.x / 2) + movie.poster_path);
+        DisplayMetrics metrics = new DisplayMetrics();
+        getWindowManager().getDefaultDisplay().getMetrics(metrics);
+        intent.putExtra(getString(R.string.extra_poster_url),
+                viewModel.buildPosterUrlBase(metrics.widthPixels / 2) + movie.poster_path);
         startActivity(intent);
     }
 }

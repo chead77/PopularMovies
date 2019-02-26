@@ -83,7 +83,7 @@ public class PostersViewModel extends ViewModel {
             url = url.concat("w342");
         else if (width < (500 + 780) / 2)
             url = url.concat("w500");
-        else if (width <= 780)
+        else if (width <= 920)
             url = url.concat("w780");
         else
             url = url.concat("original");
