@@ -15,10 +15,10 @@ import com.squareup.picasso.Picasso;
 import java.util.ArrayList;
 
 public class PostersAdapter extends RecyclerView.Adapter<PosterViewHolder> {
-    private String posterPathBase;
+    private String posterUrlBase;
 
-    public PostersAdapter(ArrayList<Movie> data, String base, PostersAdapterCallback callback) {
-        posterPathBase = base;
+    public PostersAdapter(ArrayList<Movie> data, String imageUrlBase, PostersAdapterCallback callback) {
+        posterUrlBase = imageUrlBase;
         dataSet = data;
         this.callback = callback;
     }
@@ -44,14 +44,16 @@ public class PostersAdapter extends RecyclerView.Adapter<PosterViewHolder> {
     public void onBindViewHolder(@NonNull final PosterViewHolder holder, int position) {
         ImageView poster = holder.poster;
         if (poster != null) {
-            Picasso.get().load(posterPathBase + dataSet.get(position).poster_path).into(poster);
+            Picasso.get()
+                    .load(posterUrlBase + dataSet.get(position).poster_path)
+                    .placeholder(android.R.drawable.stat_notify_error)
+                    .error(android.R.drawable.stat_notify_error)
+                    .into(poster);
             poster.setContentDescription(poster.getContext()
-                    .getString(R.string.movie_poster_content_description) + " - " + dataSet.get(position).title);
+                    .getString(R.string.movie_poster_content_description) + ": " + dataSet.get(position).title);
             poster.setOnClickListener(new View.OnClickListener() {
                 @Override
-                public void onClick(View view) {
-                    callback.onPosterClicked(dataSet.get(holder.getAdapterPosition()));
-                }
+                public void onClick(View view) { callback.onPosterClicked(dataSet.get(holder.getAdapterPosition())); }
             });
         }
     }
