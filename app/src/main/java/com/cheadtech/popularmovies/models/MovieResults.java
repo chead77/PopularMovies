@@ -4,15 +4,20 @@ import java.util.ArrayList;
 
 @SuppressWarnings({"WeakerAccess", "unused"})
 public class MovieResults {
-    public MovieResults(int totalResults, int totalPages, ArrayList<Movie> movies) {
-        page = 1;
-        total_results = totalResults;
-        total_pages = totalPages;
-        results = movies;
+    public MovieResults(
+            Integer page,
+            Integer totalResults,
+            Integer totalPages,
+            ArrayList<Movie> movies)
+    {
+        this.page = page;
+        this.total_results = totalResults;
+        this.total_pages = totalPages;
+        this.results = movies;
     }
 
-    public int page;
-    public int total_results;
-    public int total_pages;
+    public Integer page;
+    public Integer total_results;
+    public Integer total_pages;
     public ArrayList<Movie> results;
 }
