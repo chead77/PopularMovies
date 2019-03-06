@@ -7,5 +7,6 @@
 /captures
 .externalNativeBuild
 app/src/main/java/com/cheadtech/popularmovies/restricted_values/Constants.java
-sampledata
 app/src/main/java/com/cheadtech/popularmovies/restricted_values/*
+sampledata
+samplevideodata
