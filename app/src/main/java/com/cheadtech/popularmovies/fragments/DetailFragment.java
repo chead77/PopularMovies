@@ -19,6 +19,8 @@ import android.widget.TextView;
 import com.cheadtech.popularmovies.R;
 import com.cheadtech.popularmovies.models.Movie;
 import com.cheadtech.popularmovies.room.DatabaseLoader;
+import com.cheadtech.popularmovies.room.Favorite;
+import com.cheadtech.popularmovies.room.PopularMoviesDB;
 import com.cheadtech.popularmovies.viewmodels.DetailViewModel;
 import com.squareup.picasso.Picasso;
 
@@ -60,8 +62,7 @@ public class DetailFragment extends Fragment {
                 Log.e(getClass().toString(), "poster URL not provided");
             }
 
-            Picasso.get()
-                    .load(posterUrl)
+            Picasso.get().load(posterUrl)
                     .placeholder(android.R.drawable.stat_notify_error)
                     .error(android.R.drawable.stat_notify_error)
                     .into(poster);
@@ -69,16 +70,19 @@ public class DetailFragment extends Fragment {
             synopsis.setText(movie.overview);
             userRating.setText(movie.vote_average.toString());
             releaseDate.setText(movie.release_date);
-            viewModel.favorite.observe(this, new Observer<Boolean>() {
-                @Override
-                public void onChanged(@Nullable Boolean fav) { setFavoriteButtonState(fav); }
-            });
             favorite.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) { viewModel.onFavoriteClicked(movie.id); }
             });
 
-            viewModel.init(DatabaseLoader.getDbInstance(activity.getApplicationContext()), movie);
+            PopularMoviesDB db = DatabaseLoader.getDbInstance(activity.getApplicationContext());
+            viewModel.init(db);
+            db.popularMoviesDao().getLiveFavorite(movie.id).observe(this, new Observer<Favorite>() {
+                @Override
+                public void onChanged(@Nullable Favorite favorite) {
+                    setFavoriteButtonState(favorite != null);
+                }
+            });
         }
     }
 
