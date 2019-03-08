@@ -8,5 +8,9 @@
         <item name="colorAccent">@color/colorAccent</item>
         <item name="preferenceTheme">@style/PreferenceThemeOverlay</item>
     </style>
+    
+    <style name="TextAppearance.AppCompat.Widget.ActionBar.Title" parent="android:style/TextAppearance">
+        <item name="android:textColor">@color/title_color</item>
+    </style>
 
 </resources>

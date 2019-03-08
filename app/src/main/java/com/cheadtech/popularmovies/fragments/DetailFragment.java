@@ -43,18 +43,19 @@ public class DetailFragment extends Fragment {
         viewModel = ViewModelProviders.of(this).get(DetailViewModel.class);
 
         Activity activity = getActivity();
+        TextView title = view.findViewById(R.id.movie_title);
         ImageView poster = view.findViewById(R.id.poster_thumbnail);
-        TextView originalTitle = view.findViewById(R.id.original_title);
         TextView synopsis = view.findViewById(R.id.synopsis);
         TextView userRating = view.findViewById(R.id.user_rating);
         TextView releaseDate = view.findViewById(R.id.release_date);
         favorite = view.findViewById(R.id.favorite);
 
-        if (activity != null && poster != null && originalTitle != null && synopsis != null
+        if (activity != null && title != null && poster != null &&  synopsis != null
                 && userRating != null && releaseDate != null && favorite != null) {
 
             final Movie movie = (Movie) activity.getIntent().getSerializableExtra(getString(R.string.extra_movie));
 
+            title.setText(movie.title);
             String posterUrl = "";
             if (activity.getIntent().hasExtra(getString(R.string.extra_poster_url))) {
                 posterUrl = activity.getIntent().getStringExtra(getString(R.string.extra_poster_url));
@@ -66,7 +67,6 @@ public class DetailFragment extends Fragment {
                     .placeholder(android.R.drawable.stat_notify_error)
                     .error(android.R.drawable.stat_notify_error)
                     .into(poster);
-            originalTitle.setText(movie.original_title);
             synopsis.setText(movie.overview);
             userRating.setText(movie.vote_average.toString());
             releaseDate.setText(movie.release_date);
