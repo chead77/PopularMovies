@@ -23,4 +23,5 @@
     <string name="release_date_label">Release Date</string>
     <string name="mark_as_favorite">MARK AS\nFAVORITE</string>
     <string name="trailers_label_with_colon">Trailers:</string>
+    <string name="mark_as_favorite_content_description">Mark as Favorite button</string>
 </resources>

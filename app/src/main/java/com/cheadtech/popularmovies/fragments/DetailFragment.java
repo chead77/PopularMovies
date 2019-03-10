@@ -7,12 +7,13 @@ import android.arch.lifecycle.ViewModelProviders;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -25,7 +26,7 @@ import com.cheadtech.popularmovies.viewmodels.DetailViewModel;
 import com.squareup.picasso.Picasso;
 
 public class DetailFragment extends Fragment {
-    private Button favorite;
+    private ImageButton favorite;
 
     private DetailViewModel viewModel;
 
@@ -43,19 +44,19 @@ public class DetailFragment extends Fragment {
         viewModel = ViewModelProviders.of(this).get(DetailViewModel.class);
 
         Activity activity = getActivity();
-        TextView title = view.findViewById(R.id.title);
+        CollapsingToolbarLayout toolbar = view.findViewById(R.id.collapsing_toolbar);
         ImageView poster = view.findViewById(R.id.poster_thumbnail);
         TextView synopsis = view.findViewById(R.id.synopsis);
         TextView userRating = view.findViewById(R.id.user_rating);
         TextView releaseDate = view.findViewById(R.id.release_date);
         favorite = view.findViewById(R.id.favorite);
 
-        if (activity != null && title != null && poster != null &&  synopsis != null
+        if (activity != null && poster != null &&  synopsis != null && toolbar != null
                 && userRating != null && releaseDate != null && favorite != null) {
 
             final Movie movie = (Movie) activity.getIntent().getSerializableExtra(getString(R.string.extra_movie));
 
-            title.setText(movie.title);
+            toolbar.setTitle(movie.title);
             String posterUrl = "";
             if (activity.getIntent().hasExtra(getString(R.string.extra_poster_url))) {
                 posterUrl = activity.getIntent().getStringExtra(getString(R.string.extra_poster_url));
@@ -91,9 +92,9 @@ public class DetailFragment extends Fragment {
         // TODO - review and update as needed
         if (activity != null) {
             if (fav) {
-                favorite.setBackground(activity.getDrawable(R.color.colorAccent));
+                favorite.setImageDrawable(activity.getDrawable(android.R.drawable.star_big_on));
             } else {
-                favorite.setBackground(activity.getDrawable(R.color.colorPrimary));
+                favorite.setImageDrawable(activity.getDrawable(android.R.drawable.star_big_off));
             }
         }
     }

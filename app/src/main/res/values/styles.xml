@@ -13,4 +13,12 @@
         <item name="android:textColor">@color/title_color</item>
     </style>
 
+    <style name="PopularMovies.CollapsingToolbar.Expanded" parent="TextAppearance.Design.CollapsingToolbar.Expanded">
+        <item name="android:textColor">@android:color/white</item>
+    </style>
+
+    <style name="PopularMovies.CollapsingToolbar.Collapsed" parent="TextAppearance.AppCompat.Title">
+        <item name="android:textColor">@android:color/white</item>
+    </style>
+
 </resources>
