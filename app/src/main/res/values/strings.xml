@@ -22,4 +22,5 @@
     <string name="user_rating_label">User Rating</string>
     <string name="release_date_label">Release Date</string>
     <string name="mark_as_favorite">MARK AS\nFAVORITE</string>
+    <string name="trailers_label_with_colon">Trailers:</string>
 </resources>

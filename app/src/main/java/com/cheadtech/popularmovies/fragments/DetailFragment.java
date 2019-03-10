@@ -43,7 +43,7 @@ public class DetailFragment extends Fragment {
         viewModel = ViewModelProviders.of(this).get(DetailViewModel.class);
 
         Activity activity = getActivity();
-        TextView title = view.findViewById(R.id.movie_title);
+        TextView title = view.findViewById(R.id.title);
         ImageView poster = view.findViewById(R.id.poster_thumbnail);
         TextView synopsis = view.findViewById(R.id.synopsis);
         TextView userRating = view.findViewById(R.id.user_rating);
@@ -68,8 +68,8 @@ public class DetailFragment extends Fragment {
                     .error(android.R.drawable.stat_notify_error)
                     .into(poster);
             synopsis.setText(movie.overview);
-            userRating.setText(movie.vote_average.toString());
-            releaseDate.setText(movie.release_date);
+            userRating.setText(movie.vote_average.toString() + "/10");
+            releaseDate.setText(movie.release_date.substring(0,4));
             favorite.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) { viewModel.onFavoriteClicked(movie.id); }
