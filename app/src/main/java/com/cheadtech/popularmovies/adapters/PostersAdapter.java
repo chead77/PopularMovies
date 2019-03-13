@@ -5,7 +5,6 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 
 import com.cheadtech.popularmovies.R;
 import com.cheadtech.popularmovies.models.Movie;
@@ -42,18 +41,19 @@ public class PostersAdapter extends RecyclerView.Adapter<PosterViewHolder> {
 
     @Override
     public void onBindViewHolder(@NonNull final PosterViewHolder holder, int position) {
-        ImageView poster = holder.poster;
-        if (poster != null) {
+        if (holder.poster != null) {
+            final int adapterPosition = holder.getAdapterPosition();
+
             Picasso.get()
-                    .load(posterUrlBase + dataSet.get(position).poster_path)
+                    .load(posterUrlBase + dataSet.get(adapterPosition).poster_path)
                     .placeholder(android.R.drawable.stat_notify_error)
                     .error(android.R.drawable.stat_notify_error)
-                    .into(poster);
-            poster.setContentDescription(poster.getContext()
-                    .getString(R.string.movie_poster_content_description) + ": " + dataSet.get(position).title);
-            poster.setOnClickListener(new View.OnClickListener() {
+                    .into(holder.poster);
+            holder.poster.setContentDescription(holder.poster.getContext()
+                    .getString(R.string.movie_poster_content_description) + ": " + dataSet.get(adapterPosition).title);
+            holder.poster.setOnClickListener(new View.OnClickListener() {
                 @Override
-                public void onClick(View view) { callback.onPosterClicked(dataSet.get(holder.getAdapterPosition())); }
+                public void onClick(View view) { callback.onPosterClicked(dataSet.get(adapterPosition)); }
             });
         }
     }

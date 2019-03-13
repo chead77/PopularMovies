@@ -21,7 +21,10 @@
     <string name="synopsis_label">Plot Synopsis</string>
     <string name="user_rating_label">User Rating</string>
     <string name="release_date_label">Release Date</string>
-    <string name="mark_as_favorite">MARK AS\nFAVORITE</string>
+    <string name="mark_as_favorite">Mark as Favorite</string>
     <string name="trailers_label_with_colon">Trailers:</string>
     <string name="mark_as_favorite_content_description">Mark as Favorite button</string>
+    <string name="play_trailer_button">Play Trailer Button</string>
+    <string name="trailer_label">Trailer %d</string>
+    <string name="alert_network_error_trailers">A network error occurred while fetching trailer list</string>
 </resources>

@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/trailer_item"
+    android:orientation="horizontal"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="8dp"
+    android:layout_marginBottom="8dp"
+    >
+
+    <FrameLayout
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        >
+
+        <ImageView
+            android:id="@+id/play_trailer"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:contentDescription="@string/play_trailer_button"
+            android:src="@drawable/ic_play_arrow_black_24dp"
+            android:background="#00000000"
+            />
+
+    </FrameLayout>
+
+    <TextView
+        android:id="@+id/trailer_label"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="4"
+        android:textColor="@color/colorPrimary"
+        android:textAppearance="@style/TextAppearance.AppCompat.Large"
+        android:layout_gravity="center_vertical|start"
+        />
+
+</LinearLayout>

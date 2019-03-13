@@ -9,6 +9,7 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -16,14 +17,19 @@ import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.cheadtech.popularmovies.R;
+import com.cheadtech.popularmovies.adapters.TrailersAdapter;
 import com.cheadtech.popularmovies.models.Movie;
+import com.cheadtech.popularmovies.models.Trailer;
 import com.cheadtech.popularmovies.room.DatabaseLoader;
 import com.cheadtech.popularmovies.room.Favorite;
 import com.cheadtech.popularmovies.room.PopularMoviesDB;
 import com.cheadtech.popularmovies.viewmodels.DetailViewModel;
 import com.squareup.picasso.Picasso;
+
+import java.util.ArrayList;
 
 public class DetailFragment extends Fragment {
     private ImageButton favorite;
@@ -49,10 +55,11 @@ public class DetailFragment extends Fragment {
         TextView synopsis = view.findViewById(R.id.synopsis);
         TextView userRating = view.findViewById(R.id.user_rating);
         TextView releaseDate = view.findViewById(R.id.release_date);
+        final RecyclerView trailersRV = view.findViewById(R.id.trailers);
         favorite = view.findViewById(R.id.favorite);
 
         if (activity != null && poster != null &&  synopsis != null && toolbar != null
-                && userRating != null && releaseDate != null && favorite != null) {
+                && userRating != null && releaseDate != null && trailersRV != null && favorite != null) {
 
             final Movie movie = (Movie) activity.getIntent().getSerializableExtra(getString(R.string.extra_movie));
 
@@ -61,7 +68,7 @@ public class DetailFragment extends Fragment {
             if (activity.getIntent().hasExtra(getString(R.string.extra_poster_url))) {
                 posterUrl = activity.getIntent().getStringExtra(getString(R.string.extra_poster_url));
             } else {
-                Log.e(getClass().toString(), "poster URL not provided");
+                Log.e(getClass().toString(), "poster URL not provided in fragment extras");
             }
 
             Picasso.get().load(posterUrl)
@@ -76,13 +83,26 @@ public class DetailFragment extends Fragment {
                 public void onClick(View view) { viewModel.onFavoriteClicked(movie.id); }
             });
 
+            trailersRV.setAdapter(new TrailersAdapter());
+            viewModel.trailersLD.observe(this, new Observer<ArrayList<Trailer>>() {
+                @Override
+                public void onChanged(@Nullable ArrayList<Trailer> trailers) {
+                    TrailersAdapter adapter = (TrailersAdapter) trailersRV.getAdapter();
+                    if (adapter != null && trailers != null)
+                        adapter.setData(trailers);
+                }
+            });
+
             PopularMoviesDB db = DatabaseLoader.getDbInstance(activity.getApplicationContext());
-            viewModel.init(db);
+            viewModel.init(movie, db, new DetailViewModel.DetailViewModelCallback() {
+                @Override
+                public void onNetworkError(int messageResourceStringId) {
+                    Toast.makeText(getContext(), getString(messageResourceStringId), Toast.LENGTH_LONG).show();
+                }
+            });
             db.popularMoviesDao().getLiveFavorite(movie.id).observe(this, new Observer<Favorite>() {
                 @Override
-                public void onChanged(@Nullable Favorite favorite) {
-                    setFavoriteButtonState(favorite != null);
-                }
+                public void onChanged(@Nullable Favorite favorite) { setFavoriteButtonState(favorite != null); }
             });
         }
     }
