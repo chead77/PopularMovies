@@ -13,6 +13,9 @@ public interface PopularMoviesDao {
     @Query("SELECT * FROM favorite")
     List<Favorite> getAllFavorites();
 
+    @Query("SELECT * FROM favorite")
+    LiveData<List<Favorite>> getAllFavoritesLive();
+
     @Query("SELECT * FROM favorite WHERE id = :movieId")
     Favorite getFavorite(Integer movieId);
 

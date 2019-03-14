@@ -22,9 +22,12 @@ import com.cheadtech.popularmovies.activities.DetailActivity;
 import com.cheadtech.popularmovies.adapters.PostersAdapter;
 import com.cheadtech.popularmovies.models.Movie;
 import com.cheadtech.popularmovies.network.NetworkUtils;
+import com.cheadtech.popularmovies.room.DatabaseLoader;
+import com.cheadtech.popularmovies.room.Favorite;
 import com.cheadtech.popularmovies.viewmodels.PostersViewModel;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class PostersFragment extends Fragment implements PostersAdapter.PostersAdapterCallback, PostersViewModel.PostersViewModelCallback, SharedPreferences.OnSharedPreferenceChangeListener {
     private RecyclerView postersRV;
@@ -62,6 +65,19 @@ public class PostersFragment extends Fragment implements PostersAdapter.PostersA
             }
         });
 
+        // TODO - leaving this here for now because it needs a lifecycle owner for the observe function... look into moving this and the retrofit logic in the viewmodels to a repository layer
+        DatabaseLoader.getDbInstance(getContext()).popularMoviesDao().getAllFavoritesLive().observe(this, new Observer<List<Favorite>>() {
+            @Override
+            public void onChanged(@Nullable List<Favorite> favorites) {
+                if (sharedPreferences.contains(getString(R.string.pref_sort_by_key))) {
+                    String sort = sharedPreferences.getString(getString(R.string.pref_sort_by_key), getString(R.string.pref_sort_by_popular_value));
+                    if (sort != null && sort.equals(getString(R.string.pref_sort_by_favorites_value))) {
+                        viewModel.sortByFavorites(favorites);
+                    }
+                }
+            }
+        });
+
         setupSharedPreferences();
     }
 
@@ -69,6 +85,7 @@ public class PostersFragment extends Fragment implements PostersAdapter.PostersA
         sharedPreferences = PreferenceManager.getDefaultSharedPreferences(requireContext());
         viewModel.init(
                 sharedPreferences.getString(getString(R.string.pref_sort_by_key), getString(R.string.pref_sort_by_popular_value)),
+                DatabaseLoader.getDbInstance(getContext()),
                 this);
         sharedPreferences.registerOnSharedPreferenceChangeListener(this);
     }
@@ -91,9 +108,26 @@ public class PostersFragment extends Fragment implements PostersAdapter.PostersA
     // PostersViewModel.PostersViewModelCallback method
     @Override
     public void onNetworkError() {
-        // might not finish() here in a production app, but this exits cleanly if the list of movies can't be refreshed
         Toast.makeText(requireContext(), getString(R.string.alert_network_error), Toast.LENGTH_LONG).show();
-        requireActivity().finish();
+    }
+
+    @Override
+    public void onEmptyFavorites() {
+        // had to surround this toast in a post() to avoid triggering a runtime error when the app initially loads.
+        // The Toast may have been firing off before the fragment was fully loaded and displayed
+        if (postersRV != null) {
+            postersRV.post(new Runnable() {
+                @Override
+                public void run() {
+                    Toast.makeText(requireContext(), getString(R.string.error_no_favorites_found), Toast.LENGTH_LONG).show();
+                }
+            });
+        }
+    }
+
+    @Override
+    public void onDBError() {
+        Toast.makeText(requireContext(), getString(R.string.error_database), Toast.LENGTH_LONG).show();
     }
 
     // PostersAdapter.PostersAdapterCallback method
