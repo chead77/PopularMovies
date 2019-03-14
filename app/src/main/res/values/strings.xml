@@ -27,4 +27,5 @@
     <string name="play_trailer_button">Play Trailer Button</string>
     <string name="trailer_label">Trailer %d</string>
     <string name="alert_network_error_trailers">A network error occurred while fetching trailer list</string>
+    <string name="alert_network_error_reviews">A network error occurred while fetching reviews list</string>
 </resources>

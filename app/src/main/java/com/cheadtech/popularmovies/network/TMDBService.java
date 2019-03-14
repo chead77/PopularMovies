@@ -17,5 +17,5 @@ public interface TMDBService {
     Call<TrailerResults> getTrailers(@Path("id") Integer id, @Query("api_key") String apiKey);
 
     @GET("3/movie/{id}/reviews")
-    Call<ReviewResults> getReviews(@Path("id") String id, @Query("api_key") String apiKey);
+    Call<ReviewResults> getReviews(@Path("id") Integer id, @Query("api_key") String apiKey);
 }

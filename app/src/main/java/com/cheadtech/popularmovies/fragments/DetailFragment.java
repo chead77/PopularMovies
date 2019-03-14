@@ -80,7 +80,7 @@ public class DetailFragment extends Fragment {
             releaseDate.setText(movie.release_date.substring(0,4));
             favorite.setOnClickListener(new View.OnClickListener() {
                 @Override
-                public void onClick(View view) { viewModel.onFavoriteClicked(movie.id); }
+                public void onClick(View view) { viewModel.onFavoriteClicked(movie); }
             });
 
             trailersRV.setAdapter(new TrailersAdapter());
