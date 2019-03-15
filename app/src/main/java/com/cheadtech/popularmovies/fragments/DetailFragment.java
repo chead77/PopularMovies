@@ -20,8 +20,10 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.cheadtech.popularmovies.R;
+import com.cheadtech.popularmovies.adapters.ReviewsAdapter;
 import com.cheadtech.popularmovies.adapters.TrailersAdapter;
 import com.cheadtech.popularmovies.models.Movie;
+import com.cheadtech.popularmovies.models.Review;
 import com.cheadtech.popularmovies.models.Trailer;
 import com.cheadtech.popularmovies.room.DatabaseLoader;
 import com.cheadtech.popularmovies.room.Favorite;
@@ -56,9 +58,10 @@ public class DetailFragment extends Fragment {
         TextView userRating = view.findViewById(R.id.user_rating);
         TextView releaseDate = view.findViewById(R.id.release_date);
         final RecyclerView trailersRV = view.findViewById(R.id.trailers);
+        final RecyclerView reviewsRV = view.findViewById(R.id.reviews);
         favorite = view.findViewById(R.id.favorite);
 
-        if (activity != null && poster != null &&  synopsis != null && toolbar != null
+        if (activity != null && poster != null &&  synopsis != null && toolbar != null && reviewsRV != null
                 && userRating != null && releaseDate != null && trailersRV != null && favorite != null) {
 
             final Movie movie = (Movie) activity.getIntent().getSerializableExtra(getString(R.string.extra_movie));
@@ -92,6 +95,15 @@ public class DetailFragment extends Fragment {
                         adapter.setData(trailers);
                 }
             });
+            reviewsRV.setAdapter(new ReviewsAdapter());
+            viewModel.reviewsLD.observe(this, new Observer<ArrayList<Review>>() {
+                @Override
+                public void onChanged(@Nullable ArrayList<Review> reviews) {
+                    ReviewsAdapter adapter = (ReviewsAdapter) reviewsRV.getAdapter();
+                    if (adapter != null && reviews != null)
+                        adapter.setData(reviews);
+                }
+            });
 
             PopularMoviesDB db = DatabaseLoader.getDbInstance(activity.getApplicationContext());
             viewModel.init(movie, db, new DetailViewModel.DetailViewModelCallback() {
@@ -109,7 +121,6 @@ public class DetailFragment extends Fragment {
 
     private void setFavoriteButtonState(Boolean fav) {
         Activity activity = getActivity();
-        // TODO - review and update as needed
         if (activity != null) {
             if (fav) {
                 favorite.setImageDrawable(activity.getDrawable(android.R.drawable.star_big_on));

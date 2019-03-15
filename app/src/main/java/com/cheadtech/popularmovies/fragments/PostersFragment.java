@@ -65,7 +65,6 @@ public class PostersFragment extends Fragment implements PostersAdapter.PostersA
             }
         });
 
-        // TODO - leaving this here for now because it needs a lifecycle owner for the observe function... look into moving this and the retrofit logic in the viewmodels to a repository layer
         DatabaseLoader.getDbInstance(getContext()).popularMoviesDao().getAllFavoritesLive().observe(this, new Observer<List<Favorite>>() {
             @Override
             public void onChanged(@Nullable List<Favorite> favorites) {

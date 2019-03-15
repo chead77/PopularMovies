@@ -32,4 +32,6 @@
     <string name="alert_network_error_reviews">A network error occurred while fetching reviews list</string>
     <string name="error_no_favorites_found">No favorites selected</string>
     <string name="error_database">Database error. Please try again.</string>
+    <string name="reviews_label_with_colon">Reviews:</string>
+    <string name="written_by">Written by %s</string>
 </resources>
