@@ -1,7 +1,6 @@
 package com.cheadtech.popularmovies.models;
 
 import java.io.Serializable;
-import java.util.ArrayList;
 
 @SuppressWarnings({"WeakerAccess", "unused"})
 public class Trailer implements Serializable {

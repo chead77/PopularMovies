@@ -19,10 +19,6 @@
     <!-- Movie Details -->
     <string name="movie_detail_label">Movie Detail</string>
     <string name="extra_poster_url" translatable="false">extra_poster_url</string>
-    <string name="original_title_label">Original Title</string>
-    <string name="synopsis_label">Plot Synopsis</string>
-    <string name="user_rating_label">User Rating</string>
-    <string name="release_date_label">Release Date</string>
     <string name="mark_as_favorite">Mark as Favorite</string>
     <string name="trailers_label_with_colon">Trailers:</string>
     <string name="mark_as_favorite_content_description">Mark as Favorite button</string>
