@@ -1,5 +1,5 @@
 # PopularMovies
-## Udacity Android Developer Nanodegree course project 2, stages 1 & 2
+Udacity Android Developer Nanodegree course project 2, stages 1 & 2
 
 ## PopularMoviesConstants.API_KEY
 Any retrofit call to the TMDB API uses the string constant PopularMoviesConstants.API_KEY. This key
