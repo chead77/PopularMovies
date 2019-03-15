@@ -27,4 +27,6 @@ public class Favorite {
     @ColumnInfo(name = "movie_overview")
     public String movieOverview;
 
+    // if more information were needed, more fields could be stored.
+    // For the purposes of this exercise, I'm not storing everything.
 }

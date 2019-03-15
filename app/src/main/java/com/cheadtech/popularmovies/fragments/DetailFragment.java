@@ -35,8 +35,6 @@ import com.squareup.picasso.Picasso;
 import java.util.ArrayList;
 
 public class DetailFragment extends Fragment {
-    private ImageButton favorite;
-
     private DetailViewModel viewModel;
 
     @Nullable
@@ -58,9 +56,9 @@ public class DetailFragment extends Fragment {
         TextView synopsis = view.findViewById(R.id.synopsis);
         TextView userRating = view.findViewById(R.id.user_rating);
         TextView releaseDate = view.findViewById(R.id.release_date);
+        ImageButton favorite = view.findViewById(R.id.favorite);
         final RecyclerView trailersRV = view.findViewById(R.id.trailers);
         final RecyclerView reviewsRV = view.findViewById(R.id.reviews);
-        favorite = view.findViewById(R.id.favorite);
 
         if (activity != null && poster != null &&  synopsis != null && toolbar != null && reviewsRV != null
                 && userRating != null && releaseDate != null && trailersRV != null && favorite != null) {
@@ -68,17 +66,18 @@ public class DetailFragment extends Fragment {
             final Movie movie = (Movie) activity.getIntent().getSerializableExtra(getString(R.string.extra_movie));
 
             toolbar.setTitle(movie.title);
+
             String posterUrl = "";
             if (activity.getIntent().hasExtra(getString(R.string.extra_poster_url))) {
                 posterUrl = activity.getIntent().getStringExtra(getString(R.string.extra_poster_url));
             } else {
                 Log.e(getClass().toString(), "poster URL not provided in fragment extras");
             }
-
             Picasso.get().load(posterUrl)
-                    .placeholder(android.R.drawable.stat_notify_error)
-                    .error(android.R.drawable.stat_notify_error)
+                    .placeholder(R.drawable.ic_hourglass_empty_black)
+                    .error(R.drawable.ic_error_outline_black)
                     .into(poster);
+
             synopsis.setText(movie.overview);
             userRating.setText(movie.vote_average.toString() + "/10");
             releaseDate.setText(movie.release_date.substring(0,4));
@@ -87,6 +86,7 @@ public class DetailFragment extends Fragment {
                 public void onClick(View view) { viewModel.onFavoriteClicked(movie); }
             });
 
+            // RecyclerView adapters and observers
             trailersRV.setAdapter(new TrailersAdapter());
             trailersRV.addItemDecoration(new DividerItemDecoration(requireContext(), DividerItemDecoration.VERTICAL));
             viewModel.trailersLD.observe(this, new Observer<ArrayList<Trailer>>() {
@@ -115,6 +115,7 @@ public class DetailFragment extends Fragment {
                     Toast.makeText(getContext(), getString(messageResourceStringId), Toast.LENGTH_LONG).show();
                 }
             });
+            // observe the favorites table in case someone removes a favorite
             db.popularMoviesDao().getLiveFavorite(movie.id).observe(this, new Observer<Favorite>() {
                 @Override
                 public void onChanged(@Nullable Favorite favorite) { setFavoriteButtonState(favorite != null); }
@@ -125,10 +126,11 @@ public class DetailFragment extends Fragment {
     private void setFavoriteButtonState(Boolean fav) {
         Activity activity = getActivity();
         if (activity != null) {
+            ImageButton favoriteButton = activity.findViewById(R.id.favorite);
             if (fav) {
-                favorite.setImageDrawable(activity.getDrawable(android.R.drawable.star_big_on));
+                favoriteButton.setImageDrawable(activity.getDrawable(android.R.drawable.star_big_on));
             } else {
-                favorite.setImageDrawable(activity.getDrawable(android.R.drawable.star_big_off));
+                favoriteButton.setImageDrawable(activity.getDrawable(android.R.drawable.star_big_off));
             }
         }
     }

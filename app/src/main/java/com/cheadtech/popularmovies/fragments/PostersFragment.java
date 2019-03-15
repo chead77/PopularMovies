@@ -112,8 +112,8 @@ public class PostersFragment extends Fragment implements PostersAdapter.PostersA
 
     @Override
     public void onEmptyFavorites() {
-        // had to surround this toast in a post() to avoid triggering a runtime error when the app initially loads.
-        // The Toast may have been firing off before the fragment was fully loaded and displayed
+        // This toast had to be surrounded with a post() to avoid triggering a runtime error when the app initially loads.
+        // The Toast may have been firing off before the fragment was fully loaded and displayed, and was causing a thread error.
         if (postersRV != null) {
             postersRV.post(new Runnable() {
                 @Override

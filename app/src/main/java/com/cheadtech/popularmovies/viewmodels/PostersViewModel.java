@@ -39,10 +39,6 @@ public class PostersViewModel extends ViewModel {
     }
 
     public void refreshMovieList(String sortBy) {
-        getMovieList(sortBy);
-    }
-
-    private void getMovieList(String sortBy) {
         // PopularMoviesConstants.API_KEY is a String constant stored in a file that will not be included in the Github repo.
         // To use this project, a new API key will need to be obtained from https://www.themoviedb.org/account/signup
         if (sortBy.equals("popular") || sortBy.equals("top_rated")) {

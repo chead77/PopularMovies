@@ -44,8 +44,7 @@ public class PostersAdapter extends RecyclerView.Adapter<PosterViewHolder> {
         if (holder.poster != null) {
             final int adapterPosition = holder.getAdapterPosition();
 
-            Picasso.get()
-                    .load(posterUrlBase + dataSet.get(adapterPosition).poster_path)
+            Picasso.get().load(posterUrlBase + dataSet.get(adapterPosition).poster_path)
                     .placeholder(R.drawable.ic_hourglass_empty_black)
                     .error(R.drawable.ic_error_outline_black)
                     .into(holder.poster);
