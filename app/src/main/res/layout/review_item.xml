@@ -13,10 +13,11 @@
         android:id="@+id/author"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textColor="@android:color/white"
         android:background="#CACACA"
         android:textAppearance="@style/TextAppearance.AppCompat.Large"
         android:layout_gravity="center_vertical|start"
+        android:paddingStart="8dp"
+        android:paddingEnd="8dp"
         />
 
     <TextView
@@ -26,6 +27,10 @@
         android:textColor="@color/colorPrimary"
         android:textAppearance="@style/TextAppearance.AppCompat.Large"
         android:layout_gravity="center_vertical|start"
+        android:paddingStart="8dp"
+        android:paddingEnd="8dp"
+        android:paddingTop="4dp"
+        android:paddingBottom="4dp"
         />
 
 </LinearLayout>

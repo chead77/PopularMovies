@@ -46,8 +46,8 @@ public class PostersAdapter extends RecyclerView.Adapter<PosterViewHolder> {
 
             Picasso.get()
                     .load(posterUrlBase + dataSet.get(adapterPosition).poster_path)
-                    .placeholder(android.R.drawable.stat_notify_error)
-                    .error(android.R.drawable.stat_notify_error)
+                    .placeholder(R.drawable.ic_hourglass_empty_black)
+                    .error(R.drawable.ic_error_outline_black)
                     .into(holder.poster);
             holder.poster.setContentDescription(holder.poster.getContext()
                     .getString(R.string.movie_poster_content_description) + ": " + dataSet.get(adapterPosition).title);

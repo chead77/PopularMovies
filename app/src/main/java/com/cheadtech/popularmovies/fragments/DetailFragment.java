@@ -9,6 +9,7 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -87,6 +88,7 @@ public class DetailFragment extends Fragment {
             });
 
             trailersRV.setAdapter(new TrailersAdapter());
+            trailersRV.addItemDecoration(new DividerItemDecoration(requireContext(), DividerItemDecoration.VERTICAL));
             viewModel.trailersLD.observe(this, new Observer<ArrayList<Trailer>>() {
                 @Override
                 public void onChanged(@Nullable ArrayList<Trailer> trailers) {
@@ -96,6 +98,7 @@ public class DetailFragment extends Fragment {
                 }
             });
             reviewsRV.setAdapter(new ReviewsAdapter());
+            reviewsRV.addItemDecoration(new DividerItemDecoration(requireContext(), DividerItemDecoration.VERTICAL));
             viewModel.reviewsLD.observe(this, new Observer<ArrayList<Review>>() {
                 @Override
                 public void onChanged(@Nullable ArrayList<Review> reviews) {

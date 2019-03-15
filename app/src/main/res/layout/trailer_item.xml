@@ -20,7 +20,7 @@
             android:layout_width="48dp"
             android:layout_height="48dp"
             android:contentDescription="@string/play_trailer_button"
-            android:src="@drawable/ic_play_arrow_black_24dp"
+            android:src="@drawable/ic_play_arrow_black"
             android:background="#00000000"
             />
 
