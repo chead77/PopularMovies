@@ -4,11 +4,11 @@ import android.arch.lifecycle.MutableLiveData;
 import android.arch.lifecycle.ViewModel;
 import android.util.Log;
 
+import com.cheadtech.popularmovies.BuildConfig;
 import com.cheadtech.popularmovies.models.Movie;
 import com.cheadtech.popularmovies.models.MovieResults;
 import com.cheadtech.popularmovies.network.ServiceLocator;
 import com.cheadtech.popularmovies.network.TMDBService;
-import com.cheadtech.popularmovies.restricted_values.PopularMoviesConstants;
 import com.cheadtech.popularmovies.room.Favorite;
 import com.cheadtech.popularmovies.room.PopularMoviesDB;
 
@@ -39,11 +39,9 @@ public class PostersViewModel extends ViewModel {
     }
 
     public void refreshMovieList(String sortBy) {
-        // PopularMoviesConstants.API_KEY is a String constant stored in a file that will not be included in the Github repo.
-        // To use this project, a new API key will need to be obtained from https://www.themoviedb.org/account/signup
         if (sortBy.equals("popular") || sortBy.equals("top_rated")) {
             TMDBService tmdbService = ServiceLocator.getInstance().getTMDBService();
-            tmdbService.getMovies(sortBy, PopularMoviesConstants.API_KEY).enqueue(new Callback<MovieResults>() {
+            tmdbService.getMovies(sortBy, BuildConfig.API_KEY).enqueue(new Callback<MovieResults>() {
                 @Override
                 public void onResponse(Call<MovieResults> call, Response<MovieResults> response) {
                     if (response.code() == 200) {
