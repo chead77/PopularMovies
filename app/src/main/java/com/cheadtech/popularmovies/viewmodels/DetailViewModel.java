@@ -5,6 +5,7 @@ import android.arch.lifecycle.ViewModel;
 import android.support.annotation.NonNull;
 import android.util.Log;
 
+import com.cheadtech.popularmovies.BuildConfig;
 import com.cheadtech.popularmovies.R;
 import com.cheadtech.popularmovies.models.Movie;
 import com.cheadtech.popularmovies.models.Review;
@@ -13,7 +14,6 @@ import com.cheadtech.popularmovies.models.Trailer;
 import com.cheadtech.popularmovies.models.TrailerResults;
 import com.cheadtech.popularmovies.network.ServiceLocator;
 import com.cheadtech.popularmovies.network.TMDBService;
-import com.cheadtech.popularmovies.restricted_values.PopularMoviesConstants;
 import com.cheadtech.popularmovies.room.Favorite;
 import com.cheadtech.popularmovies.room.PopularMoviesDB;
 
@@ -42,10 +42,8 @@ public class DetailViewModel extends ViewModel {
     }
 
     private void getTrailerList(Movie movie) {
-        // PopularMoviesConstants.API_KEY is a String constant stored in a file that will not be included in the Github repo.
-        // To use this project, a new API key will need to be obtained from https://www.themoviedb.org/account/signup
         TMDBService tmdbService = ServiceLocator.getInstance().getTMDBService();
-        tmdbService.getTrailers(movie.id, PopularMoviesConstants.API_KEY).enqueue(new Callback<TrailerResults>() {
+        tmdbService.getTrailers(movie.id, BuildConfig.API_KEY).enqueue(new Callback<TrailerResults>() {
             @Override
             public void onResponse(Call<TrailerResults> call, Response<TrailerResults> response) {
                 if (response.code() == 200) {
@@ -72,10 +70,8 @@ public class DetailViewModel extends ViewModel {
     }
 
     private void getReviewsList(Movie movie) {
-        // PopularMoviesConstants.API_KEY is a String constant stored in a file that will not be included in the Github repo.
-        // To use this project, a new API key will need to be obtained from https://www.themoviedb.org/account/signup
         TMDBService tmdbService = ServiceLocator.getInstance().getTMDBService();
-        tmdbService.getReviews(movie.id, PopularMoviesConstants.API_KEY).enqueue(new Callback<ReviewResults>() {
+        tmdbService.getReviews(movie.id, BuildConfig.API_KEY).enqueue(new Callback<ReviewResults>() {
             @Override
             public void onResponse(Call<ReviewResults> call, Response<ReviewResults> response) {
                 if (response.code() == 200) {

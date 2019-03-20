@@ -30,4 +30,6 @@
     <string name="error_database">Database error. Please try again.</string>
     <string name="reviews_label_with_colon">Reviews:</string>
     <string name="written_by">Written by %s</string>
+    <string name="no_trailers_found_for_this_movie">No trailers found for this movie.</string>
+    <string name="no_reviews_found_for_this_movie">No reviews found for this movie.</string>
 </resources>

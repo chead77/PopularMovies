@@ -57,11 +57,14 @@ public class DetailFragment extends Fragment {
         TextView userRating = view.findViewById(R.id.user_rating);
         TextView releaseDate = view.findViewById(R.id.release_date);
         ImageButton favorite = view.findViewById(R.id.favorite);
+        final TextView trailersEmpty = view.findViewById(R.id.trailers_empty_message);
+        final TextView reviewsEmpty = view.findViewById(R.id.reviews_empty_message);
         final RecyclerView trailersRV = view.findViewById(R.id.trailers);
         final RecyclerView reviewsRV = view.findViewById(R.id.reviews);
 
         if (activity != null && poster != null &&  synopsis != null && toolbar != null && reviewsRV != null
-                && userRating != null && releaseDate != null && trailersRV != null && favorite != null) {
+                && userRating != null && releaseDate != null && trailersRV != null && favorite != null
+                && trailersEmpty != null && reviewsEmpty != null) {
 
             final Movie movie = (Movie) activity.getIntent().getSerializableExtra(getString(R.string.extra_movie));
 
@@ -93,8 +96,16 @@ public class DetailFragment extends Fragment {
                 @Override
                 public void onChanged(@Nullable ArrayList<Trailer> trailers) {
                     TrailersAdapter adapter = (TrailersAdapter) trailersRV.getAdapter();
-                    if (adapter != null && trailers != null)
+                    if (adapter != null && trailers != null) {
                         adapter.setData(trailers);
+                        if (trailers.size() == 0) {
+                            trailersEmpty.setVisibility(View.VISIBLE);
+                            trailersRV.setVisibility(View.GONE);
+                        } else {
+                            trailersEmpty.setVisibility(View.GONE);
+                            trailersRV.setVisibility(View.VISIBLE);
+                        }
+                    }
                 }
             });
             reviewsRV.setAdapter(new ReviewsAdapter());
@@ -103,8 +114,16 @@ public class DetailFragment extends Fragment {
                 @Override
                 public void onChanged(@Nullable ArrayList<Review> reviews) {
                     ReviewsAdapter adapter = (ReviewsAdapter) reviewsRV.getAdapter();
-                    if (adapter != null && reviews != null)
+                    if (adapter != null && reviews != null) {
                         adapter.setData(reviews);
+                        if (reviews.size() == 0) {
+                            reviewsEmpty.setVisibility(View.VISIBLE);
+                            reviewsRV.setVisibility(View.GONE);
+                        } else {
+                            reviewsEmpty.setVisibility(View.GONE);
+                            reviewsRV.setVisibility(View.VISIBLE);
+                        }
+                    }
                 }
             });
 
