@@ -66,7 +66,7 @@ public class DetailFragment extends Fragment {
                 && userRating != null && releaseDate != null && trailersRV != null && favorite != null
                 && trailersEmpty != null && reviewsEmpty != null) {
 
-            final Movie movie = (Movie) activity.getIntent().getSerializableExtra(getString(R.string.extra_movie));
+            final Movie movie = (Movie) activity.getIntent().getParcelableExtra(getString(R.string.extra_movie));
 
             toolbar.setTitle(movie.title);
 
